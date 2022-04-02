@@ -47,7 +47,9 @@ namespace Assets.Scripts
             {
                 // Get a random spawn position between the two bounds
                 float randomY = Random.Range(this.bottomBound.position.y, this.topBound.position.y);
-                Vector2 randomPos = new Vector2(topBound.position.x, randomY);
+                float randomX = Random.Range(this.topBound.position.x, this.bottomBound.position.x);
+
+                Vector2 randomPos = new Vector2(randomX, randomY);
 
                 // If even, spawn a fish
                 if (index % 2 == 0) 

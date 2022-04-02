@@ -76,7 +76,7 @@ namespace Assets.Scripts
         {
             // Calculate the X pos of the wave
             float xPos = this.initialXPos - this.waveDistance - (this.waveDistance) * Mathf.Cos(time * this.waveSpeed);
-
+             
             // Use the derivative to determine if the wave is receding or not
             this.isReceding = (-this.waveDistance * this.waveSpeed * Mathf.Sin(time*this.waveSpeed)) < 0;
 

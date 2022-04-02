@@ -9,8 +9,6 @@ public class FishController : MonoBehaviour
 
     private Rigidbody2D rigidBody;
 
-    private bool isStuck = false;
-
     // Use this for initialization
     void Start()
     {
@@ -19,12 +17,9 @@ public class FishController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (this.isStuck == false)
-        {
-            float xPos = WaveController.Instance.getWaveXPos();
+        float xPos = WaveController.Instance.getWaveXPos();
 
-            this.rigidBody.MovePosition(this.rigidBody.position + new Vector2(xPos - this.rigidBody.position.x, 0));
-        }
+        this.rigidBody.MovePosition(this.rigidBody.position + new Vector2(xPos - this.rigidBody.position.x, 0));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -37,7 +32,7 @@ public class FishController : MonoBehaviour
 
             wall.TakeDamage(this.damage);
 
-            // TODO: Animate the fish dying or something idk maaaaaaaaaaan
+            // TODO: Shrink the fish's scale and then destroy it
             Destroy(this.gameObject);
         }
     }
