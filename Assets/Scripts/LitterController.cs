@@ -10,12 +10,11 @@ namespace Assets.Scripts
         private Rigidbody2D rigidBody;
 
         private bool isStuck = false;
+
         // Use this for initialization
         void Start()
         {
             this.rigidBody = this.GetComponent<Rigidbody2D>();
-
-
         }
 
         void FixedUpdate()
