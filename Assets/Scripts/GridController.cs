@@ -6,6 +6,7 @@ namespace Assets.Scripts
 {
     public class GridController : MonoBehaviour
     {
+        public static GridController Instance { get; private set; }
         public Grid grid;
 
         public Tilemap tilemap;
@@ -13,6 +14,8 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start()
         {
+            GridController.Instance = this;
+
             if (this.grid == null) { this.grid = this.GetComponent<Grid>(); }
             if (this.tilemap == null) { this.tilemap = this.GetComponent<Tilemap>(); }
         }
@@ -25,11 +28,15 @@ namespace Assets.Scripts
                 // Get the position of the mouse in the screen
                 Vector3 mousePos = Input.mousePosition;
 
-                // Convert the mouse position to a point in the world
-                Vector2 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-
-                Debug.Log(this.grid.WorldToCell(worldPos));
+                
             }
+        }
+
+        public Vector2 GetTileCenter (Vector2 worldPos)
+        {
+            Vector3Int gridCoords = this.grid.WorldToCell(worldPos);
+
+            return this.grid.GetCellCenterWorld (gridCoords);
         }
     }
 }

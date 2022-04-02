@@ -1,13 +1,29 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public int SandResources
+    {
+        get
+        {
+            return this._sandResources;
+        }
+        set
+        {
+            this._sandResources = value;
+            this.sandCounter.text = this._sandResources.ToString();
+        }
+    }
     /// <summary>
     /// How much sand the player has
     /// </summary>
-    public int sandResources = 10;
+    public int _sandResources = 10;
 
     /// <summary>
     /// How many rocks the player has
@@ -40,11 +56,29 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private CircleCollider2D collider;
 
+    public WallController t1WallPrefab;
+
+    public Image progressBarContainer;
+
+    public Image progressBarFill;
+
+    public float actionTimer = 0f;
+
+    public float actionCompleteTime = 1f;
+
+    public bool isPerformingAction = false;
+
+    private Vector2 actionPosition;
+
+    public TextMeshProUGUI sandCounter;
+
     /// <summary>
     /// Start is called before the first frame update
     /// </summary>
     private void Start()
     {
+        this.SandResources = this._sandResources;
+
         // Getr the player's rigidbody so we can move them
         this.rigidBody = this.GetComponent<Rigidbody2D>();
 
@@ -78,8 +112,42 @@ public class PlayerController : MonoBehaviour
             // Was anything clicked?
             if (raycastHit)
             {
+                // Was a wall 
 
+                return;
             }
+
+            // Start placing a T1 wall
+            if (this._sandResources > 0)
+            {
+                this.isPerformingAction = true;
+                this.actionPosition = GridController.Instance.GetTileCenter(worldPos);
+            }
+            // TODO: Hide/Display progress bar based on isPerformingAction
+        }
+
+        if (Input.GetMouseButtonUp (0)) 
+        {
+            this.isPerformingAction = false;
+            this.actionTimer = 0f;
+            this.progressBarFill.fillAmount = this.actionTimer / this.actionCompleteTime;
+        }
+
+        if (this.isPerformingAction)
+        {
+            this.actionTimer += Time.deltaTime;
+
+            if (this.actionTimer >= this.actionCompleteTime)
+            {
+                WallController wall = Instantiate<WallController>(this.t1WallPrefab);
+
+                wall.transform.position = this.actionPosition;
+                this.isPerformingAction = false;
+                this.actionTimer = 0f;
+                this.SandResources--;
+            }
+
+            this.progressBarFill.fillAmount = this.actionTimer / this.actionCompleteTime;
         }
     }
 

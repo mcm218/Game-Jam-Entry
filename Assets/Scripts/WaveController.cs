@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -9,11 +10,6 @@ namespace Assets.Scripts
         /// THe wave's collider
         /// </summary>
         public Collider2D collider;
-
-        /// <summary>
-        /// Is the wave currently moving or is it stuck on a wall?
-        /// </summary>
-        public bool isMoving = true;
 
         /// <summary>
         /// Is the wave returning to the ocean or extending over the beach?
@@ -27,7 +23,9 @@ namespace Assets.Scripts
 
         public float time = 0f;
 
-        private float initialYPos;
+        private float initialXPos;
+
+        public List<WaveChildController> waveChildren = new List<WaveChildController>();
 
         // Use this for initialization
         void Start()
@@ -35,53 +33,28 @@ namespace Assets.Scripts
             // If needed, get the player's collider so we can detect if they touch anything
             if (this.collider == null) { this.collider = this.GetComponent<CircleCollider2D>(); }
 
-            this.initialYPos = this.transform.localPosition.y;
+            this.initialXPos = this.transform.localPosition.x;
             this.time = Mathf.PI;
 
-            Debug.Log("Peak is " + (this.initialYPos - (this.waveDistance*2)));
+            Debug.Log("Peak is " + (this.initialXPos - (this.waveDistance*2)));
         }
 
         public void Update()
         {
-            this.MoveWave(this.time);
+            this.MoveWaves(this.time);
             this.time += Time.deltaTime;
         }
 
-        public void MoveWave(float time)
+        public void MoveWaves(float time)
         {
-            float yPos = this.initialYPos - this.waveDistance - (this.waveDistance) * Mathf.Cos(time * this.waveSpeed);
+            float xPos = this.initialXPos - this.waveDistance - (this.waveDistance) * Mathf.Cos(time * this.waveSpeed);
             this.isReceding = (-this.waveDistance * this.waveSpeed * Mathf.Sin(time*this.waveSpeed)) < 0;
 
-            // Wave Movement
-            // If the wave is moving OR if the wave is receding
-            if (this.isMoving || (this.isReceding && yPos >= this.transform.position.y))
-            {
-                this.isMoving = true;
-                this.transform.position = new Vector2(0, yPos);
-            }
-        }
-
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            Debug.Log("Hit Object: " + collision.gameObject.name);
-            // Did the wave hit a wall? If so, pause movement
-            if (collision.gameObject.GetComponent<WallController>())
-            {
-                Debug.Log("HIT WALL");
-                this.isMoving = false;
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            Debug.Log("Left Object: " + collision.gameObject.name);
-            // Is the wave no longer hitting a wall?
-            if (collision.gameObject.GetComponent<WallController>())
-            {
-                Debug.Log("LEFT WALL");
-                this.isMoving = true;
-            }
+            // Try to move each wave segment
+            this.waveChildren.ForEach((wave) =>
+            { 
+                wave.MoveWave(xPos, isReceding); 
+            });
         }
     }
 }
