@@ -112,41 +112,54 @@ public class PlayerController : MonoBehaviour
             // Was anything clicked?
             if (raycastHit)
             {
-                // Was a wall 
+                // TODO: Starting to repair/upgrade/destroy litter stuff goes here
 
                 return;
             }
 
-            // Start placing a T1 wall
+            // Are there enoguh sand resources? If so, start placing a T1 wall
             if (this._sandResources > 0)
             {
                 this.isPerformingAction = true;
                 this.actionPosition = GridController.Instance.GetTileCenter(worldPos);
             }
+
             // TODO: Hide/Display progress bar based on isPerformingAction
         }
 
-        if (Input.GetMouseButtonUp (0)) 
+        // Is the player performing an action and release the left mouse button?
+        if (this.isPerformingAction && Input.GetMouseButtonUp (0)) 
         {
+            // Reset the action progress bar
             this.isPerformingAction = false;
             this.actionTimer = 0f;
             this.progressBarFill.fillAmount = this.actionTimer / this.actionCompleteTime;
         }
 
+        // Is the player performing an action?
         if (this.isPerformingAction)
         {
+            // Update the action timer
             this.actionTimer += Time.deltaTime;
 
+            // Has the action completion time been reached?
             if (this.actionTimer >= this.actionCompleteTime)
             {
+                // Create a wall object
                 WallController wall = Instantiate<WallController>(this.t1WallPrefab);
-
+                
+                // Set the wall's position to where the player originally clicked
                 wall.transform.position = this.actionPosition;
+
+                // Reset the action timer
                 this.isPerformingAction = false;
                 this.actionTimer = 0f;
+
+                // Decrement sand resources
                 this.SandResources--;
             }
 
+            // Update the progress bar
             this.progressBarFill.fillAmount = this.actionTimer / this.actionCompleteTime;
         }
     }
