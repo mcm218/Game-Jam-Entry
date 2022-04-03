@@ -159,7 +159,7 @@ MonoBehaviour:
   rockResources: 0
   seashellResouces: 0
   speed: 2.5
-  clickRange: 1
+  clickRange: 2.31
   t1WallPrefab: {fileID: 7128072338701436204, guid: a4fe209b22347554f8668bd412ca3e71, type: 3}
   progressBarContainer: {fileID: 1439872184}
   progressBarFill: {fileID: 1787310153}

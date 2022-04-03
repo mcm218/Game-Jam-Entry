@@ -111,7 +111,8 @@ public class PlayerController : MonoBehaviour
             // Convert the mouse position to a point in the world
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-            float distance = Vector3.Distance(this.transform.position, worldPos);
+            float distance = Vector2.Distance(this.transform.position, worldPos);
+            
 
             if (Mathf.Abs(distance) <= clickRange)
             {
