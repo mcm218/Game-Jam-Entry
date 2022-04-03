@@ -9823,9 +9823,14 @@ MonoBehaviour:
   timer: 0
   roundCompleteTime: 20
   t1FishPrefab: {fileID: 5108748845215028306, guid: df1a55bcd3b00b449b9971a509b0cd5f, type: 3}
+  t2FishPrefab: {fileID: 3733000846023706619, guid: ae87ae05100cec948bd6d8bfa252375e, type: 3}
+  t3FishPrefab: {fileID: 4255617666947438197, guid: 3a9d2a64bc7894047b31a3688cd0a430, type: 3}
   tirePrefab: {fileID: 3908836480711524373, guid: 72d25014fd3acad429019b07cfe60bf3, type: 3}
+  canPrefab: {fileID: 7876787591611067562, guid: 803ff3bdf20f96640a58a02b91686f4e, type: 3}
+  plasticPrefab: {fileID: 5827410839615757602, guid: 34af5af6c98e33e4bb410eb6e3777911, type: 3}
   topBound: {fileID: 603275691}
   bottomBound: {fileID: 2109942110}
+  difficultyModifier: 1.5
 --- !u!4 &1866976304
 Transform:
   m_ObjectHideFlags: 0
