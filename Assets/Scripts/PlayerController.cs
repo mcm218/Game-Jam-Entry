@@ -186,16 +186,6 @@ public class PlayerController : MonoBehaviour
                         this.isPerformingAction = true;
                         this.audioSource.PlayOneShot(this.diggingEffect);
                     }
-
-                    this.litterBeingRemoved = raycastHit.collider.gameObject.GetComponent<LitterController> ();
-                    if (this.litterBeingRemoved)
-                    {
-                        this.progressBarContainer.color = Color.white;
-                        this.currentAction = ActionEnum.ClearingLitter;
-                        this.isPerformingAction = true;
-
-                        // TODO: Litter destruction sound effect
-                    }
                     // TODO: Starting to repair/upgrade stuff goes here
                 }
                 else
@@ -229,17 +219,27 @@ public class PlayerController : MonoBehaviour
                 // Cast a ray to detect if the player clicked an object with a collider
                 RaycastHit2D raycastHit = Physics2D.Raycast(worldPos, Vector2.zero);
 
-                WallController wall = raycastHit.collider.gameObject.GetComponent<WallController>();
+                this.wallBeingRemoved = raycastHit.collider.gameObject.GetComponent<WallController>();
 
                 // Was a wall clicked?
-                if (wall)
+                if (this.wallBeingRemoved)
                 {
-                    this.wallBeingRemoved = wall;
-
                     this.progressBarContainer.color = Color.white;
                     this.currentAction = ActionEnum.RemovingWall;
                     this.isPerformingAction = true;
                     this.audioSource.PlayOneShot(this.diggingEffect);
+                }
+
+                this.litterBeingRemoved = raycastHit.collider.gameObject.GetComponent<LitterController>();
+
+                // Was litter clicked?
+                if (this.litterBeingRemoved)
+                {
+                    this.progressBarContainer.color = Color.white;
+                    this.currentAction = ActionEnum.ClearingLitter;
+                    this.isPerformingAction = true;
+
+                    // TODO: Litter destruction sound effect
                 }
             }
         }
