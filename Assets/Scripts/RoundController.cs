@@ -100,6 +100,10 @@ namespace Assets.Scripts
         private IEnumerator StartNewRound (int roundNum)
         {
             this.earnedPicture = roundNum > this.pictureRewardRound;
+            if (this.earnedPicture && WifeController.Instance.isMoving == false)
+            {
+                WifeController.Instance.StartMoving();
+            }
 
             int totalSpawns = 2 + Mathf.FloorToInt(0.1f * Mathf.Pow(roundNum, this.difficultyModifier));
 
