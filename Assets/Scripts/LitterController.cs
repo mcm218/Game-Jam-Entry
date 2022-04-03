@@ -7,9 +7,19 @@ namespace Assets.Scripts
     {
         public int damage = 10;
 
+        public Color damageColor = Color.red;
+
         private Rigidbody2D rigidBody;
 
         private bool isStuck = false;
+
+        private SandCastleController castle;
+
+        private WallController wall;
+
+        public float timer = 0f;
+
+        public float tickTime = 1f;
 
         // Use this for initialization
         void Start()
@@ -25,33 +35,54 @@ namespace Assets.Scripts
 
                 this.rigidBody.MovePosition(this.rigidBody.position + new Vector2(xPos - this.rigidBody.position.x, 0));
             }
+
+            if (this.isStuck)
+            {
+                this.timer += Time.fixedDeltaTime;
+
+                if (this.timer >= this.tickTime)
+                {
+                    this.timer = 0f;
+
+                    // Is the litter stuck to wall?
+                    if (this.wall)
+                    {
+                        // Tint the wall red to indicate it's taking damage
+                        this.wall.GetComponent<SpriteRenderer>().color = this.damageColor;
+                        // Damage the wall and if it's destroyed, don't stop the litter
+                        if (this.wall.TakeDamage(this.damage))
+                        {
+                            this.isStuck = false;
+                            return;
+                        }
+                    }
+
+                    // Is the litter stuck to a castle?
+                    if (this.castle)
+                    {
+                        // Tint the castle red to indicate it's taking damage
+                        // TODO: NEED TO TINT ALL THE CASTLE SPRITES
+                        this.castle.GetComponent<SpriteRenderer>().color = this.damageColor;
+                        this.castle.TakeDamage(this.damage);
+                    }
+
+                }
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             // Did the litter hit a wall? If so, pause movement
-            WallController wall = collision.gameObject.GetComponent<WallController>();
-            if (wall)
+            this.wall = collision.gameObject.GetComponent<WallController>();
+            if (this.wall)
             {
-                // Damage the wall and if it's destroyed, don't stop the litter
-                if (wall.TakeDamage(this.damage))
-                {
-                    return;
-                }
-
                 this.isStuck = true;
             }
 
             // Did the litter hit the castle?
-            SandCastleController castle = collision.gameObject.GetComponent<SandCastleController>();
-            if (castle)
+            this.castle = collision.gameObject.GetComponent<SandCastleController>();
+            if (this.castle)
             {
-                // Damage the wall and if it's destroyed, don't stop the litter
-                if (castle.TakeDamage(this.damage))
-                {
-                    return;
-                }
-
                 this.isStuck = true;
             }
         }
@@ -62,11 +93,29 @@ namespace Assets.Scripts
             WallController wall = collision.gameObject.GetComponent<WallController>();
             if (wall)
             {
-                Debug.Log("Hit object");
-
+                this.wall = null;
                 this.isStuck = false;
             }
 
+        }
+
+        public void RemoveLitter ()
+        {
+            // Is the litter stuck to wall?
+            if (this.wall)
+            {
+                // Clear any tint
+                this.wall.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+
+            // Is the litter stuck to a castle?
+            if (this.castle)
+            {
+                // Clear any tint
+                this.castle.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+
+            Destroy(this.gameObject);
         }
     }
 }
