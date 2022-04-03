@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Assets.Scripts
 {
@@ -9,6 +10,8 @@ namespace Assets.Scripts
         public static RewardUIController Instance { get; set; }
 
         public Image image;
+
+        public TextMeshProUGUI failureMessage;
 
         public Button restartButton;
 
@@ -20,7 +23,8 @@ namespace Assets.Scripts
         {
             RewardUIController.Instance = this;
             this.image.color = Color.clear;
-            this.restartButton.transform.localScale = Vector3.zero;
+            this.restartButton.transform.localScale  = Vector3.zero;
+            this.failureMessage.transform.localScale = Vector3.zero;
         }
 
         public void DisplayEnding ()
@@ -28,7 +32,8 @@ namespace Assets.Scripts
             this.image.sprite = RoundController.Instance.earnedPicture ? this.goodEndingSprite : this.badEndingSprite;
 
             this.image.color = Color.white;
-            this.restartButton.transform.localScale = Vector3.one;
+            this.restartButton.transform.localScale  = Vector3.one;
+            this.failureMessage.transform.localScale = Vector3.one;
         }
     }
 }
