@@ -1,11 +1,23 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
     public class SandCastleController : MonoBehaviour
     {
-        public int healthPoints = 200;
+        public float healthPoints = 200;
+
+        public float totalHealthPoints;
+
+        public Image healthBarContainer;
+
+        public Image healthBarFill;
+
+        private void Start()
+        {
+            this.totalHealthPoints = this.healthPoints;
+        }
 
         public bool TakeDamage(int damage)
         {
@@ -17,10 +29,12 @@ namespace Assets.Scripts
 
         public void LateUpdate()
         {
+            this.healthBarFill.fillAmount = this.healthPoints / this.totalHealthPoints;
 
             // If the wall runs out of health, destroy it
             if (this.healthPoints <= 0)
             {
+                Destroy(this.healthBarContainer.gameObject);
                 Destroy(this.gameObject);
             }
         }

@@ -54,7 +54,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range(0.1f, 10f)]
     public float clickRange = 1f;
 
-
     /// <summary>
     /// The direction the player is currently moving in
     /// </summary>
@@ -69,6 +68,8 @@ public class PlayerController : MonoBehaviour
     /// The collider of the player
     /// </summary>
     private CircleCollider2D collider;
+
+
 
     public WallController t1WallPrefab;
 
@@ -90,6 +91,20 @@ public class PlayerController : MonoBehaviour
 
     public TextMeshProUGUI sandCounter;
 
+
+    private SpriteRenderer spriteRenderer;
+
+    private Sprite activeSprite;
+
+    public Sprite rightSprite;
+
+    public Sprite leftSprite;
+
+    public Sprite upSprite;
+
+    public Sprite downSprite;
+
+
     /// <summary>
     /// Start is called before the first frame update
     /// </summary>
@@ -102,6 +117,8 @@ public class PlayerController : MonoBehaviour
 
         // Get the player's collider so we can detect if they touch anything
         this.collider = this.GetComponent<CircleCollider2D>();
+
+        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
@@ -114,6 +131,8 @@ public class PlayerController : MonoBehaviour
 
         // Get the current vertical input
         this.movement.y = Input.GetAxisRaw("Vertical");
+
+        this.UpdateSpriteDirection();
 
         // Did the player left click?
         if (Input.GetMouseButtonDown(0))
@@ -228,5 +247,41 @@ public class PlayerController : MonoBehaviour
         // - Speed handles how fast the player is moving
         // - Fixed Delta Time ensures movement is constrained to the time since the last frame
         if (this.isPerformingAction == false) { this.rigidBody.MovePosition(this.rigidBody.position + (this.movement * this.speed * Time.fixedDeltaTime)); }
+    }
+
+    public void UpdateSpriteDirection ()
+    {
+        if (this.movement.x > 0)
+        {
+            if (this.activeSprite != this.rightSprite)
+            {
+                this.activeSprite = this.rightSprite;
+                this.spriteRenderer.sprite = this.activeSprite;
+            }
+        }
+        else if (this.movement.x < 0)
+        {
+            if (this.activeSprite != this.leftSprite)
+            {
+                this.activeSprite = this.leftSprite;
+                this.spriteRenderer.sprite = this.activeSprite;
+            }
+        }
+        else if (this.movement.y > 0)
+        {
+            if (this.activeSprite != this.upSprite)
+            {
+                this.activeSprite = this.upSprite;
+                this.spriteRenderer.sprite = this.activeSprite;
+            }
+        }
+        else if (this.movement.y < 0)
+        {
+            if (this.activeSprite != this.downSprite)
+            {
+                this.activeSprite = this.downSprite;
+                this.spriteRenderer.sprite = this.activeSprite;
+            }
+        }
     }
 }
