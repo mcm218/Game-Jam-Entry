@@ -112,6 +112,14 @@ public class PlayerController : MonoBehaviour
     public Sprite downSprite;
 
 
+
+    public AudioSource audioSource;
+
+    public AudioClip diggingEffect;
+
+    public AudioClip buildingEffect;
+
+
     /// <summary>
     /// Start is called before the first frame update
     /// </summary>
@@ -168,6 +176,7 @@ public class PlayerController : MonoBehaviour
                         this.progressBarContainer.color = Color.white;
                         this.currentAction = ActionEnum.Digging;
                         this.isPerformingAction = true;
+                        this.audioSource.PlayOneShot(this.diggingEffect);
                     }
 
                     this.litterBeingRemoved = raycastHit.collider.gameObject.GetComponent<LitterController> ();
@@ -176,8 +185,10 @@ public class PlayerController : MonoBehaviour
                         this.progressBarContainer.color = Color.white;
                         this.currentAction = ActionEnum.ClearingLitter;
                         this.isPerformingAction = true;
+
+                        // TODO: Litter destruction sound effect
                     }
-                    // TODO: Starting to repair/upgrade/destroy litter stuff goes here
+                    // TODO: Starting to repair/upgrade stuff goes here
                 }
                 else
                 {
@@ -188,6 +199,7 @@ public class PlayerController : MonoBehaviour
                         this.currentAction = ActionEnum.Building;
                         this.isPerformingAction = true;
                         this.actionPosition = GridController.Instance.GetTileCenter(worldPos);
+                        this.audioSource.PlayOneShot(this.buildingEffect);
                     }
                 }
             }
@@ -199,6 +211,7 @@ public class PlayerController : MonoBehaviour
             // Reset the action progress bar
             this.progressBarContainer.color = Color.clear;
             this.isPerformingAction = false;
+            this.audioSource.Stop();
             this.actionTimer = 0f;
             this.progressBarFill.fillAmount = this.actionTimer / this.GetCurrentActionTime();
         }
@@ -223,6 +236,10 @@ public class PlayerController : MonoBehaviour
 
                         // Decrement sand resources
                         this.SandResources--;
+
+                        // Stop performing the action until user clicks again
+                        this.isPerformingAction = false;
+                        this.progressBarContainer.color = Color.clear;
                         break;
                     case ActionEnum.Digging:
                         this.SandResources++;
@@ -234,14 +251,16 @@ public class PlayerController : MonoBehaviour
                     case ActionEnum.ClearingLitter:
                         this.litterBeingRemoved.RemoveLitter();
                         this.litterBeingRemoved = null;
+
+                        // Stop performing the action until user clicks again
+                        this.isPerformingAction = false;
+                        this.progressBarContainer.color = Color.clear;
                         break;
                     default:
                         break;
                 }
 
                 // Reset the action timer
-                this.isPerformingAction = false;
-                this.progressBarContainer.color = Color.clear;
                 this.actionTimer = 0f;
             }
 

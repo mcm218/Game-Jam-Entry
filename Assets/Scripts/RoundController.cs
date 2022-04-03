@@ -61,15 +61,15 @@ namespace Assets.Scripts
                 this.currentRound++;
                 this.timer = 0f;
                 this.setupComplete = true;
-                this.StartNewRound(this.currentRound);
+                this.StartCoroutine(this.StartNewRound(this.currentRound));
                 return;
             }
             else if (this.timer >= this.roundCompleteTime)
             {
                 this.currentRound++;
                 this.timer = 0f;
-                this.StartNewRound(this.currentRound);
-                //this.StartCoroutine (this.StartNewRound(this.currentRound));
+                //this.StartNewRound(this.currentRound);
+                this.StartCoroutine (this.StartNewRound(this.currentRound));
             }
 
             if (this.newLitterList.Count > 0)
@@ -97,14 +97,14 @@ namespace Assets.Scripts
             }
         }
 
-        private void StartNewRound (int roundNum)
+        private IEnumerator StartNewRound (int roundNum)
         {
             this.earnedPicture = roundNum > this.pictureRewardRound;
 
-            float timer = 0f;
             int totalSpawns = 2 + Mathf.FloorToInt(0.1f * Mathf.Pow(roundNum, this.difficultyModifier));
 
             // Double check that this is right... later...
+            float timer = 0f;
             float timeBetweenSpawns = this.roundCompleteTime / totalSpawns;
 
             // Do stuff here later
@@ -161,6 +161,12 @@ namespace Assets.Scripts
                     Debug.Log("Spawning litter");
                 }
 
+                timer = 0f;
+                while (timer < timeBetweenSpawns)
+                {
+                    timer += Time.deltaTime;
+                    yield return null;
+                }
                 // Delay until its time for next spawn here
             }
         }
