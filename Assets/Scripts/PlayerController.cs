@@ -191,9 +191,6 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-
-            // TODO: Hide/Display progress bar based on isPerformingAction
-
         }
 
         // Is the player performing an action and release the left mouse button?
