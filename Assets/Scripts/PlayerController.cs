@@ -6,6 +6,14 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ActionEnum
+{
+    Building = 0,
+    Digging,
+    Repairing,
+    Upgrading
+}
+
 public class PlayerController : MonoBehaviour
 {
     public int SandResources
@@ -38,13 +46,13 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// The speed of the player
     /// </summary>
-    [SerializeField, Range (0.1f, 10f)]
+    [SerializeField, Range(0.1f, 10f)]
     private float speed = 1f;
 
-    
-    [SerializeField, Range (0.1f, 10f)]
+
+    [SerializeField, Range(0.1f, 10f)]
     public float clickRange = 1f;
-    
+
 
     /// <summary>
     /// The direction the player is currently moving in
@@ -75,6 +83,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 actionPosition;
 
+    private ActionEnum currentAction;
+
     public TextMeshProUGUI sandCounter;
 
     /// <summary>
@@ -103,7 +113,7 @@ public class PlayerController : MonoBehaviour
         this.movement.y = Input.GetAxisRaw("Vertical");
 
         // Did the player left click?
-        if (Input.GetMouseButtonDown (0))
+        if (Input.GetMouseButtonDown(0))
         {
             // Get the position of the mouse in the screen
             Vector3 mousePos = Input.mousePosition;
@@ -112,7 +122,6 @@ public class PlayerController : MonoBehaviour
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
             float distance = Vector2.Distance(this.transform.position, worldPos);
-            
 
             if (Mathf.Abs(distance) <= clickRange)
             {
@@ -121,33 +130,32 @@ public class PlayerController : MonoBehaviour
                 // Was anything clicked?
                 if (raycastHit)
                 {
+                    if (raycastHit.collider.gameObject.name == "DiggingSpot")
+                    {
+                        this.currentAction = ActionEnum.Digging;
+                        this.isPerformingAction = true;
+                    }
                     // TODO: Starting to repair/upgrade/destroy litter stuff goes here
-
-                    return;
                 }
-
-                // Are there enough sand resources? If so, start placing a T1 wall
-                if (this._sandResources > 0)
+                else
                 {
-                    this.isPerformingAction = true;
-                    this.actionPosition = GridController.Instance.GetTileCenter(worldPos);
-                    
+                    // Are there enough sand resources? If so, start placing a T1 wall
+                    if (this._sandResources > 0)
+                    {
+                        this.currentAction = ActionEnum.Building;
+                        this.isPerformingAction = true;
+                        this.actionPosition = GridController.Instance.GetTileCenter(worldPos);
+
+                    }
                 }
             }
-                
-                
-
-
-            
-            
-
-            
 
             // TODO: Hide/Display progress bar based on isPerformingAction
+
         }
 
         // Is the player performing an action and release the left mouse button?
-        if (this.isPerformingAction && Input.GetMouseButtonUp (0)) 
+        if (this.isPerformingAction && Input.GetMouseButtonUp(0))
         {
             // Reset the action progress bar
             this.isPerformingAction = false;
@@ -164,18 +172,32 @@ public class PlayerController : MonoBehaviour
             // Has the action completion time been reached?
             if (this.actionTimer >= this.actionCompleteTime)
             {
-                // Create a wall object
-                WallController wall = Instantiate<WallController>(this.t1WallPrefab);
-                
-                // Set the wall's position to where the player originally clicked
-                wall.transform.position = this.actionPosition;
+                switch (this.currentAction)
+                {
+                    case ActionEnum.Building:
+                        // Create a wall object
+                        WallController wall = Instantiate<WallController>(this.t1WallPrefab);
+
+                        // Set the wall's position to where the player originally clicked
+                        wall.transform.position = this.actionPosition;
+
+                        // Decrement sand resources
+                        this.SandResources--;
+                        break;
+                    case ActionEnum.Digging:
+                        this.SandResources++;
+                        break;
+                    case ActionEnum.Repairing:
+                        break;
+                    case ActionEnum.Upgrading:
+                        break;
+                    default:
+                        break;
+                }
 
                 // Reset the action timer
                 this.isPerformingAction = false;
                 this.actionTimer = 0f;
-
-                // Decrement sand resources
-                this.SandResources--;
             }
 
             // Update the progress bar
@@ -192,6 +214,6 @@ public class PlayerController : MonoBehaviour
         // - Movement handles the direction
         // - Speed handles how fast the player is moving
         // - Fixed Delta Time ensures movement is constrained to the time since the last frame
-        this.rigidBody.MovePosition(this.rigidBody.position + (this.movement * this.speed * Time.fixedDeltaTime));
+        if (this.isPerformingAction == false) { this.rigidBody.MovePosition(this.rigidBody.position + (this.movement * this.speed * Time.fixedDeltaTime)); }
     }
 }
