@@ -114,7 +114,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2907ca60105bb640b0bfa465d660c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 8
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  timer: 0
+  tickTime: 1
+  canStartMoving: 0
 --- !u!50 &7547643960761748937
 Rigidbody2D:
   serializedVersion: 4

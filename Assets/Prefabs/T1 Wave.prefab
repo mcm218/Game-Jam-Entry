@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79444c32e8a7d1a4b891ddc0683c68ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 7
   isMoving: 1
   waveCollider: {fileID: 1480876700337138744}
   spriteRenderer: {fileID: 4165608932188261235}

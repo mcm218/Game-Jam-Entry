@@ -165,8 +165,8 @@ MonoBehaviour:
   progressBarContainer: {fileID: 1439872184}
   progressBarFill: {fileID: 1787310153}
   actionTimer: 0
-  diggingTime: 0.568
-  buildingTime: 0.01
+  diggingTime: 1.05
+  buildingTime: 0.3
   litterRemovalTime: 1
   removeWallTime: 1
   isPerformingAction: 0
