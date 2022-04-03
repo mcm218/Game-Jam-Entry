@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -38,6 +39,10 @@ namespace Assets.Scripts
         [Range(1f, 3f)]
         public float difficultyModifier = 1.5f;
 
+        public List<LitterController> newLitterList = new List<LitterController> ();
+
+        public List<FishController> newFishList = new List<FishController> ();
+
         //public bool combatRoundActive = true;
 
         // Use this for initialization
@@ -56,6 +61,7 @@ namespace Assets.Scripts
                 this.currentRound++;
                 this.timer = 0f;
                 this.setupComplete = true;
+                this.StartNewRound(this.currentRound);
                 return;
             }
             else if (this.timer >= this.roundCompleteTime)
@@ -65,6 +71,30 @@ namespace Assets.Scripts
                 this.StartNewRound(this.currentRound);
                 //this.StartCoroutine (this.StartNewRound(this.currentRound));
             }
+
+            if (this.newLitterList.Count > 0)
+            {
+                if (WaveController.Instance.ReadyToMove ())
+                {
+                    this.newLitterList.ForEach(litter =>
+                    {
+                        litter.canStartMoving = true;
+                    });
+                    this.newLitterList.Clear();
+                }
+            }
+
+            if (this.newFishList.Count > 0)
+            {
+                if (WaveController.Instance.ReadyToMove())
+                {
+                    this.newFishList.ForEach(fish =>
+                    {
+                        fish.canStartMoving = true;
+                    });
+                    this.newFishList.Clear();
+                }
+            }
         }
 
         private void StartNewRound (int roundNum)
@@ -72,7 +102,7 @@ namespace Assets.Scripts
             this.earnedPicture = roundNum > this.pictureRewardRound;
 
             float timer = 0f;
-            int totalSpawns = 1 + Mathf.FloorToInt(0.1f * Mathf.Pow(roundNum, this.difficultyModifier));
+            int totalSpawns = 2 + Mathf.FloorToInt(0.1f * Mathf.Pow(roundNum, this.difficultyModifier));
 
             // Double check that this is right... later...
             float timeBetweenSpawns = this.roundCompleteTime / totalSpawns;
@@ -106,6 +136,7 @@ namespace Assets.Scripts
                     }
 
                     newFish.transform.position = randomPos;
+                    this.newFishList.Add(newFish);
                     Debug.Log("Spawning fish");
                 }
                 // If even, spawn litter
@@ -126,6 +157,7 @@ namespace Assets.Scripts
                     }
 
                     newLitter.transform.position = randomPos;
+                    this.newLitterList.Add(newLitter);
                     Debug.Log("Spawning litter");
                 }
 

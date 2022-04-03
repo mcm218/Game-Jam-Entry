@@ -86,6 +86,14 @@ namespace Assets.Scripts
             if (Mathf.Abs (this.initialXPos - xPos) <= 0.1) { this.currentWaveDistance = newWaveDistance; }
         }
 
+        public bool ReadyToMove ()
+        {
+            // Calculate the X pos of the wave
+            float xPos = this.initialXPos - this.currentWaveDistance - (this.currentWaveDistance) * Mathf.Cos(time * this.waveSpeed);
+            // Is the wave currently within 0.1 units of its initial x position? If so, return true
+            return Mathf.Abs(this.initialXPos - xPos) <= 0.1;
+        }
+
         /// <summary>
         /// Attempts to move all the wave segments
         /// </summary>

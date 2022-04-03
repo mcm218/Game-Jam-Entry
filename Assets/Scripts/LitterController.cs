@@ -21,6 +21,8 @@ namespace Assets.Scripts
 
         public float tickTime = 1f;
 
+        public bool canStartMoving = false;
+
         // Use this for initialization
         void Start()
         {
@@ -29,6 +31,8 @@ namespace Assets.Scripts
 
         void FixedUpdate()
         {
+            if (this.canStartMoving == false) { return; }
+
             if (this.isStuck == false)
             {
                 float xPos = WaveController.Instance.getWaveXPos();

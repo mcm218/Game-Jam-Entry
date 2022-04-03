@@ -9,6 +9,8 @@ public class FishController : MonoBehaviour
 
     private Rigidbody2D rigidBody;
 
+    public bool canStartMoving = false;
+
     // Use this for initialization
     void Start()
     {
@@ -17,6 +19,8 @@ public class FishController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (this.canStartMoving == false) { return; }
+
         float xPos = WaveController.Instance.getWaveXPos();
 
         this.rigidBody.MovePosition(this.rigidBody.position + new Vector2(xPos - this.rigidBody.position.x, 0));
