@@ -8660,7 +8660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ad067861dce864ba9b1db3f7a4ed9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 25
+  healthPoints: 250
   totalHealthPoints: 0
   healthBarContainer: {fileID: 1225937500}
   healthBarFill: {fileID: 461874933}
@@ -11673,7 +11673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18bd0ce540f7e40469f3760313d64d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRound: 10
+  currentRound: 1
   timer: 0
   initialSetupTime: 10
   setupComplete: 0
