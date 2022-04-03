@@ -56,7 +56,7 @@ namespace Assets.Scripts
         {
             this.image.sprite = this.badEndingSprite;
             
-            // Hide the clsoe button
+            // Hide the close button
             this.closeButton.transform.localScale    = Vector3.zero;
 
             // Show the restart button and failure message
