@@ -99,6 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  damageColor: {r: 1, g: 0.6084906, b: 0.6084906, a: 1}
+  timer: 0
+  tickTime: 1
+  canStartMoving: 0
 --- !u!50 &4246300756530709735
 Rigidbody2D:
   serializedVersion: 4
