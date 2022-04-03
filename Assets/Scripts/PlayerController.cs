@@ -236,6 +236,10 @@ public class PlayerController : MonoBehaviour
 
                         // Decrement sand resources
                         this.SandResources--;
+
+                        // Stop performing the action until user clicks again
+                        this.isPerformingAction = false;
+                        this.progressBarContainer.color = Color.clear;
                         break;
                     case ActionEnum.Digging:
                         this.SandResources++;
@@ -247,14 +251,16 @@ public class PlayerController : MonoBehaviour
                     case ActionEnum.ClearingLitter:
                         this.litterBeingRemoved.RemoveLitter();
                         this.litterBeingRemoved = null;
+
+                        // Stop performing the action until user clicks again
+                        this.isPerformingAction = false;
+                        this.progressBarContainer.color = Color.clear;
                         break;
                     default:
                         break;
                 }
 
                 // Reset the action timer
-                this.isPerformingAction = false;
-                this.progressBarContainer.color = Color.clear;
                 this.actionTimer = 0f;
             }
 
