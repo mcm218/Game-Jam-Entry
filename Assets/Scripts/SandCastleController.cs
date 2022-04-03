@@ -6,6 +6,8 @@ namespace Assets.Scripts
 {
     public class SandCastleController : MonoBehaviour
     {
+        public static bool SandCastleDestroyed { get; set; } = false;
+
         public float healthPoints = 200;
 
         public float totalHealthPoints;
@@ -34,6 +36,10 @@ namespace Assets.Scripts
             // If the wall runs out of health, destroy it
             if (this.healthPoints <= 0)
             {
+                SandCastleController.SandCastleDestroyed = true;
+
+                RewardUIController.Instance.DisplayEnding();
+
                 Destroy(this.healthBarContainer.gameObject);
                 Destroy(this.gameObject);
             }

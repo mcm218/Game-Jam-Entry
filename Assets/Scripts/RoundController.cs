@@ -18,6 +18,11 @@ namespace Assets.Scripts
         [Range (10f, 30f)]
         public float roundCompleteTime = 20f;
 
+        [Range (1, 20)]
+        public int pictureRewardRound = 10;
+
+        public bool earnedPicture = false;
+
         public FishController t1FishPrefab;
         public FishController t2FishPrefab;
         public FishController t3FishPrefab;
@@ -64,6 +69,8 @@ namespace Assets.Scripts
 
         private void StartNewRound (int roundNum)
         {
+            this.earnedPicture = roundNum > this.pictureRewardRound;
+
             float timer = 0f;
             int totalSpawns = 1 + Mathf.FloorToInt(0.1f * Mathf.Pow(roundNum, this.difficultyModifier));
 

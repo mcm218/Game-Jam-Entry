@@ -17,7 +17,6 @@ namespace Assets.Scripts
                 Scene currentScene = SceneManager.GetActiveScene();
 
                 if (nextSceneBuildIndex < 0) { Debug.LogError("Please set a valid build index"); return; }
-                if (nextSceneBuildIndex == currentScene.buildIndex) { Debug.LogError("The next scene id is set to the current scene"); return; }
 
                 SceneManager.LoadScene(nextSceneBuildIndex);
             }
