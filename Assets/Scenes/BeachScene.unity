@@ -167,6 +167,10 @@ MonoBehaviour:
   actionCompleteTime: 1
   isPerformingAction: 0
   sandCounter: {fileID: 845019839}
+  rightSprite: {fileID: 0}
+  leftSprite: {fileID: 0}
+  upSprite: {fileID: 0}
+  downSprite: {fileID: 0}
 --- !u!212 &4275736
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -280,8 +284,6 @@ GameObject:
   m_Component:
   - component: {fileID: 12065518}
   - component: {fileID: 12065517}
-  - component: {fileID: 12065516}
-  - component: {fileID: 12065515}
   m_Layer: 0
   m_Name: SandCastle (2)
   m_TagString: Untagged
@@ -289,48 +291,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!68 &12065515
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12065514}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -2.4147482, y: -2.4012666}
-  - {x: -2.0192032, y: -1.3645397}
-  - {x: -2.1458879, y: 0.56343985}
-  - {x: -1.5390654, y: 1.4066592}
-  - {x: 0.32283115, y: 2.4172547}
-  - {x: 1.9749053, y: 0.61654496}
-  - {x: 2.361373, y: -0.08149481}
-  - {x: 2.4428337, y: -2.4467921}
-  - {x: -2.3877857, y: -2.4012666}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
---- !u!114 &12065516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12065514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ad067861dce864ba9b1db3f7a4ed9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthPoints: 200
 --- !u!212 &12065517
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7938,6 +7898,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4165608932188261232, guid: abf93fe3e6ccf1f4bb1243ef7a9285a4, type: 3}
   m_PrefabInstance: {fileID: 445282012}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &461874931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 461874932}
+  - component: {fileID: 461874934}
+  - component: {fileID: 461874933}
+  m_Layer: 5
+  m_Name: Health Bar Fill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &461874932
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461874931}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1225937499}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 150, y: 20}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &461874933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461874931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 0
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &461874934
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461874931}
+  m_CullTransparentMesh: 1
 --- !u!1 &464470285
 GameObject:
   m_ObjectHideFlags: 0
@@ -8042,15 +8077,23 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -2.4147482, y: -2.4012666}
-  - {x: -2.0192032, y: -1.3645397}
+  - {x: 1.5016828, y: -3.1088433}
+  - {x: 1.8919547, y: -5.833171}
+  - {x: -6.8213453, y: -5.818863}
+  - {x: -6.0724535, y: -4.691389}
+  - {x: -5.911296, y: -3.058506}
+  - {x: -7.0952206, y: -3.0804982}
+  - {x: -7.0954905, y: -0.79141164}
+  - {x: -5.268586, y: 0.2496838}
+  - {x: -4.4578514, y: 1.1698196}
+  - {x: -3.1488922, y: 0.9814151}
   - {x: -2.1458879, y: 0.56343985}
   - {x: -1.5390654, y: 1.4066592}
   - {x: 0.32283115, y: 2.4172547}
   - {x: 1.9749053, y: 0.61654496}
   - {x: 2.361373, y: -0.08149481}
   - {x: 2.4428337, y: -2.4467921}
-  - {x: -2.3877857, y: -2.4012666}
+  - {x: 1.5457473, y: -3.096429}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -8068,6 +8111,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 250
+  totalHealthPoints: 0
+  healthBarContainer: {fileID: 1225937500}
+  healthBarFill: {fileID: 461874933}
 --- !u!1 &564178634
 GameObject:
   m_ObjectHideFlags: 0
@@ -8200,7 +8246,7 @@ RectTransform:
   - {fileID: 151280234}
   - {fileID: 845019838}
   m_Father: {fileID: 856041205}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -9045,6 +9091,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1225937499}
   - {fileID: 1439872183}
   - {fileID: 571365191}
   m_Father: {fileID: 0}
@@ -9235,6 +9282,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79444c32e8a7d1a4b891ddc0683c68ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1225937498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1225937499}
+  - component: {fileID: 1225937501}
+  - component: {fileID: 1225937500}
+  m_Layer: 5
+  m_Name: Health Bar Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1225937499
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225937498}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 461874932}
+  m_Father: {fileID: 856041205}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 350, y: 25}
+  m_SizeDelta: {x: 150, y: 20}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &1225937500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225937498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1225937501
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225937498}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1271183494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9339,8 +9462,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1383250734}
   - component: {fileID: 1383250733}
-  - component: {fileID: 1383250732}
-  - component: {fileID: 1383250731}
   m_Layer: 0
   m_Name: SandCastle (3)
   m_TagString: Untagged
@@ -9348,48 +9469,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!68 &1383250731
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1383250730}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -2.4147482, y: -2.4012666}
-  - {x: -2.0192032, y: -1.3645397}
-  - {x: -2.1458879, y: 0.56343985}
-  - {x: -1.5390654, y: 1.4066592}
-  - {x: 0.32283115, y: 2.4172547}
-  - {x: 1.9749053, y: 0.61654496}
-  - {x: 2.361373, y: -0.08149481}
-  - {x: 2.4428337, y: -2.4467921}
-  - {x: -2.3877857, y: -2.4012666}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
---- !u!114 &1383250732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1383250730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ad067861dce864ba9b1db3f7a4ed9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthPoints: 200
 --- !u!212 &1383250733
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9498,7 +9577,7 @@ RectTransform:
   m_Children:
   - {fileID: 1787310152}
   m_Father: {fileID: 856041205}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -9724,7 +9803,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 10}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 20}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1787310153
@@ -9996,8 +10075,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1977985989}
   - component: {fileID: 1977985988}
-  - component: {fileID: 1977985987}
-  - component: {fileID: 1977985986}
   m_Layer: 0
   m_Name: SandCastle (1)
   m_TagString: Untagged
@@ -10005,48 +10082,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!68 &1977985986
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1977985985}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -2.4147482, y: -2.4012666}
-  - {x: -2.0192032, y: -1.3645397}
-  - {x: -2.1458879, y: 0.56343985}
-  - {x: -1.5390654, y: 1.4066592}
-  - {x: 0.32283115, y: 2.4172547}
-  - {x: 1.9749053, y: 0.61654496}
-  - {x: 2.361373, y: -0.08149481}
-  - {x: 2.4428337, y: -2.4467921}
-  - {x: -2.3877857, y: -2.4012666}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
---- !u!114 &1977985987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1977985985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ad067861dce864ba9b1db3f7a4ed9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthPoints: 200
 --- !u!212 &1977985988
 SpriteRenderer:
   m_ObjectHideFlags: 0
