@@ -245,7 +245,17 @@ public class PlayerController : MonoBehaviour
         }
 
         // Is the player performing an action and release the left mouse button?
-        if (this.isPerformingAction && Input.GetMouseButtonUp(0))
+        if (this.isPerformingAction && Input.GetMouseButtonUp(0) && (this.currentAction == ActionEnum.Digging || this.currentAction == ActionEnum.Building))
+        {
+            // Reset the action progress bar
+            this.progressBarContainer.color = Color.clear;
+            this.isPerformingAction = false;
+            this.audioSource.Stop();
+            this.actionTimer = 0f;
+            this.progressBarFill.fillAmount = this.actionTimer / this.GetCurrentActionTime();
+        }
+
+        if (this.isPerformingAction && Input.GetMouseButtonUp(1) && (this.currentAction == ActionEnum.RemovingWall || this.currentAction == ActionEnum.ClearingLitter))
         {
             // Reset the action progress bar
             this.progressBarContainer.color = Color.clear;
