@@ -6,6 +6,9 @@ namespace Assets.Scripts
 {
     public class WaveController : MonoBehaviour
     {
+
+        public static WaveController Instance { get; set; }
+
         /// <summary>
         /// THe wave's collider
         /// </summary>
@@ -35,7 +38,7 @@ namespace Assets.Scripts
         /// <summary>
         /// Initial X position of the wave
         /// </summary>
-        private float initialXPos;
+        public float initialXPos;
 
         /// <summary>
         /// List of child wave segments
@@ -45,6 +48,8 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start()
         {
+            WaveController.Instance = this;
+
             // If needed, get the player's collider so we can detect if they touch anything
             if (this.collider == null) { this.collider = this.GetComponent<CircleCollider2D>(); }
 
@@ -71,7 +76,7 @@ namespace Assets.Scripts
         {
             // Calculate the X pos of the wave
             float xPos = this.initialXPos - this.waveDistance - (this.waveDistance) * Mathf.Cos(time * this.waveSpeed);
-
+             
             // Use the derivative to determine if the wave is receding or not
             this.isReceding = (-this.waveDistance * this.waveSpeed * Mathf.Sin(time*this.waveSpeed)) < 0;
 
@@ -80,6 +85,11 @@ namespace Assets.Scripts
             { 
                 wave.MoveWave(xPos, isReceding); 
             });
+        }
+
+        public float getWaveXPos ()
+        {
+            return this.waveDistance - (this.waveDistance) * Mathf.Cos(time * this.waveSpeed);
         }
     }
 }

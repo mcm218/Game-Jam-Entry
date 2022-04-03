@@ -41,6 +41,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range (0.1f, 10f)]
     private float speed = 1f;
 
+    
+    [SerializeField, Range (0.1f, 10f)]
+    public float clickRange = 1f;
+    
+
     /// <summary>
     /// The direction the player is currently moving in
     /// </summary>
@@ -104,25 +109,38 @@ public class PlayerController : MonoBehaviour
             Vector3 mousePos = Input.mousePosition;
 
             // Convert the mouse position to a point in the world
-            Vector2 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-            // Cast a ray to detect if the player clicked an object with a collider
-            RaycastHit2D raycastHit = Physics2D.Raycast(worldPos, Vector2.zero);
+            float distance = Vector3.Distance(this.transform.position, worldPos);
 
-            // Was anything clicked?
-            if (raycastHit)
+            if (Mathf.Abs(distance) <= clickRange)
             {
-                // TODO: Starting to repair/upgrade/destroy litter stuff goes here
+                // Cast a ray to detect if the player clicked an object with a collider
+                RaycastHit2D raycastHit = Physics2D.Raycast(worldPos, Vector2.zero);
+                // Was anything clicked?
+                if (raycastHit)
+                {
+                    // TODO: Starting to repair/upgrade/destroy litter stuff goes here
 
-                return;
-            }
+                    return;
+                }
 
-            // Are there enoguh sand resources? If so, start placing a T1 wall
-            if (this._sandResources > 0)
-            {
-                this.isPerformingAction = true;
-                this.actionPosition = GridController.Instance.GetTileCenter(worldPos);
+                // Are there enough sand resources? If so, start placing a T1 wall
+                if (this._sandResources > 0)
+                {
+                    this.isPerformingAction = true;
+                    this.actionPosition = GridController.Instance.GetTileCenter(worldPos);
+                    
+                }
             }
+                
+                
+
+
+            
+            
+
+            
 
             // TODO: Hide/Display progress bar based on isPerformingAction
         }
