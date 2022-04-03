@@ -56,6 +56,19 @@ namespace Assets.Scripts
 
                 this.isMoving = false;
             }
+
+            // Did the wave hit the castle? If so, pause movement
+            SandCastleController castle = collision.gameObject.GetComponent<SandCastleController>();
+            if (castle)
+            {
+                // Damage the wall and if it's destroyed, don't stop the wave segment
+                if (castle.TakeDamage(this.damage))
+                {
+                    return;
+                }
+
+                this.isMoving = false;
+            }
         }
 
         private void OnTriggerExit2D(Collider2D collision)

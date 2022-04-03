@@ -33,10 +33,21 @@ namespace Assets.Scripts
             WallController wall = collision.gameObject.GetComponent<WallController>();
             if (wall)
             {
-                Debug.Log("Hit object");
-
                 // Damage the wall and if it's destroyed, don't stop the litter
                 if (wall.TakeDamage(this.damage))
+                {
+                    return;
+                }
+
+                this.isStuck = true;
+            }
+
+            // Did the litter hit the castle?
+            SandCastleController castle = collision.gameObject.GetComponent<SandCastleController>();
+            if (castle)
+            {
+                // Damage the wall and if it's destroyed, don't stop the litter
+                if (castle.TakeDamage(this.damage))
                 {
                     return;
                 }

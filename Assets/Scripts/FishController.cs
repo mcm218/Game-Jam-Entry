@@ -24,13 +24,21 @@ public class FishController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Did the litter hit a wall? If so, pause movement
+        // Did the fish hit a wall? 
         WallController wall = collision.gameObject.GetComponent<WallController>();
         if (wall)
         {
-            Debug.Log("Hit object");
-
             wall.TakeDamage(this.damage);
+
+            // TODO: Shrink the fish's scale and then destroy it
+            Destroy(this.gameObject);
+        }
+
+        // Did the fish hit the castle?
+        SandCastleController castle = collision.gameObject.GetComponent<SandCastleController>();
+        if (castle)
+        {
+            castle.TakeDamage(this.damage);
 
             // TODO: Shrink the fish's scale and then destroy it
             Destroy(this.gameObject);
