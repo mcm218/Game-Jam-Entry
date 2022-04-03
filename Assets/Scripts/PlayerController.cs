@@ -165,6 +165,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (raycastHit.collider.gameObject.name == "DiggingSpot")
                     {
+                        this.progressBarContainer.color = Color.white;
                         this.currentAction = ActionEnum.Digging;
                         this.isPerformingAction = true;
                     }
@@ -172,6 +173,7 @@ public class PlayerController : MonoBehaviour
                     this.litterBeingRemoved = raycastHit.collider.gameObject.GetComponent<LitterController> ();
                     if (this.litterBeingRemoved)
                     {
+                        this.progressBarContainer.color = Color.white;
                         this.currentAction = ActionEnum.ClearingLitter;
                         this.isPerformingAction = true;
                     }
@@ -182,6 +184,7 @@ public class PlayerController : MonoBehaviour
                     // Are there enough sand resources? If so, start placing a T1 wall
                     if (this.SandResources > 0)
                     {
+                        this.progressBarContainer.color = Color.white;
                         this.currentAction = ActionEnum.Building;
                         this.isPerformingAction = true;
                         this.actionPosition = GridController.Instance.GetTileCenter(worldPos);
@@ -197,6 +200,7 @@ public class PlayerController : MonoBehaviour
         if (this.isPerformingAction && Input.GetMouseButtonUp(0))
         {
             // Reset the action progress bar
+            this.progressBarContainer.color = Color.clear;
             this.isPerformingAction = false;
             this.actionTimer = 0f;
             this.progressBarFill.fillAmount = this.actionTimer / this.GetCurrentActionTime();
@@ -240,6 +244,7 @@ public class PlayerController : MonoBehaviour
 
                 // Reset the action timer
                 this.isPerformingAction = false;
+                this.progressBarContainer.color = Color.clear;
                 this.actionTimer = 0f;
             }
 
