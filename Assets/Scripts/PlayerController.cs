@@ -13,6 +13,7 @@ public enum ActionEnum
     Repairing,
     Upgrading,
     ClearingLitter,
+    RemovingWall,
 }
 
 public class PlayerController : MonoBehaviour
@@ -88,17 +89,24 @@ public class PlayerController : MonoBehaviour
     [Range(0.01f, 2f)]
     public float litterRemovalTime = 1f;
 
+    [Range(0.01f, 2f)]
+    public float removeWallTime = 1f;
+
+
+
     public bool isPerformingAction = false;
 
     private Vector2 actionPosition;
 
     private LitterController litterBeingRemoved;
 
+    private WallController wallBeingRemoved;
+
     private ActionEnum currentAction;
 
     public TextMeshProUGUI sandCounter;
 
-
+    
     private SpriteRenderer spriteRenderer;
 
     private Sprite activeSprite;
@@ -205,6 +213,37 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        // Did the player right click?
+        if (Input.GetMouseButtonDown (1))
+        {
+            // Get the position of the mouse in the screen
+            Vector3 mousePos = Input.mousePosition;
+
+            // Convert the mouse position to a point in the world
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+            float distance = Vector2.Distance(this.transform.position, worldPos);
+
+            if (Mathf.Abs(distance) <= clickRange)
+            {
+                // Cast a ray to detect if the player clicked an object with a collider
+                RaycastHit2D raycastHit = Physics2D.Raycast(worldPos, Vector2.zero);
+
+                WallController wall = raycastHit.collider.gameObject.GetComponent<WallController>();
+
+                // Was a wall clicked?
+                if (wall)
+                {
+                    this.wallBeingRemoved = wall;
+
+                    this.progressBarContainer.color = Color.white;
+                    this.currentAction = ActionEnum.RemovingWall;
+                    this.isPerformingAction = true;
+                    this.audioSource.PlayOneShot(this.diggingEffect);
+                }
+            }
+        }
+
         // Is the player performing an action and release the left mouse button?
         if (this.isPerformingAction && Input.GetMouseButtonUp(0))
         {
@@ -256,6 +295,14 @@ public class PlayerController : MonoBehaviour
                         this.isPerformingAction = false;
                         this.progressBarContainer.color = Color.clear;
                         break;
+                    case ActionEnum.RemovingWall:
+                        this.wallBeingRemoved.TakeDamage(int.MaxValue);
+                        this.wallBeingRemoved = null;
+
+                        // Stop performing the action until user clicks again
+                        this.isPerformingAction = false;
+                        this.progressBarContainer.color = Color.clear;
+                        break;
                     default:
                         break;
                 }
@@ -291,6 +338,8 @@ public class PlayerController : MonoBehaviour
                 return this.diggingTime;
             case ActionEnum.ClearingLitter:
                 return this.litterRemovalTime;
+            case ActionEnum.RemovingWall:
+                return this.removeWallTime;
             case ActionEnum.Repairing:
             case ActionEnum.Upgrading:
             default:
