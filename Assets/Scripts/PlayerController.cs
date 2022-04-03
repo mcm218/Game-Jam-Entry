@@ -11,7 +11,8 @@ public enum ActionEnum
     Building = 0,
     Digging,
     Repairing,
-    Upgrading
+    Upgrading,
+    ClearingLitter,
 }
 
 public class PlayerController : MonoBehaviour
@@ -83,6 +84,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 actionPosition;
 
+    private LitterController litterBeingRemoved;
+
     private ActionEnum currentAction;
 
     public TextMeshProUGUI sandCounter;
@@ -135,17 +138,23 @@ public class PlayerController : MonoBehaviour
                         this.currentAction = ActionEnum.Digging;
                         this.isPerformingAction = true;
                     }
+
+                    this.litterBeingRemoved = raycastHit.collider.gameObject.GetComponent<LitterController> ();
+                    if (this.litterBeingRemoved)
+                    {
+                        this.currentAction = ActionEnum.ClearingLitter;
+                        this.isPerformingAction = true;
+                    }
                     // TODO: Starting to repair/upgrade/destroy litter stuff goes here
                 }
                 else
                 {
                     // Are there enough sand resources? If so, start placing a T1 wall
-                    if (this._sandResources > 0)
+                    if (this.SandResources > 0)
                     {
                         this.currentAction = ActionEnum.Building;
                         this.isPerformingAction = true;
                         this.actionPosition = GridController.Instance.GetTileCenter(worldPos);
-
                     }
                 }
             }
@@ -190,6 +199,10 @@ public class PlayerController : MonoBehaviour
                     case ActionEnum.Repairing:
                         break;
                     case ActionEnum.Upgrading:
+                        break;
+                    case ActionEnum.ClearingLitter:
+                        Destroy(this.litterBeingRemoved.gameObject);
+                        this.litterBeingRemoved = null;
                         break;
                     default:
                         break;

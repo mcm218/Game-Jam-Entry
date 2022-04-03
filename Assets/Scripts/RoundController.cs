@@ -9,6 +9,7 @@ namespace Assets.Scripts
 
         public float timer = 0f;
 
+        [Range (10f, 30f)]
         public float roundCompleteTime = 20f;
 
         public FishController t1FishPrefab;
@@ -44,12 +45,17 @@ namespace Assets.Scripts
                 this.currentRound++;
                 this.timer = 0f;
                 this.StartNewRound(this.currentRound);
+                //this.StartCoroutine (this.StartNewRound(this.currentRound));
             }
         }
 
         private void StartNewRound (int roundNum)
         {
+            float timer = 0f;
             int totalSpawns = 1 + Mathf.FloorToInt(0.1f * Mathf.Pow(roundNum, this.difficultyModifier));
+
+            // Double check that this is right... later...
+            float timeBetweenSpawns = this.roundCompleteTime / totalSpawns;
 
             // Do stuff here later
             for (int index = 0; index < totalSpawns; index++)
@@ -102,6 +108,8 @@ namespace Assets.Scripts
                     newLitter.transform.position = randomPos;
                     Debug.Log("Spawning litter");
                 }
+
+                // Delay until its time for next spawn here
             }
         }
     }
