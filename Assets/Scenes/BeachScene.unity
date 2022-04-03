@@ -11859,9 +11859,9 @@ MonoBehaviour:
   timer: 0
   initialSetupTime: 10
   setupComplete: 0
-  roundCompleteTime: 10
-  pictureRewardRound: 1
-  earnedPicture: 1
+  roundCompleteTime: 26
+  pictureRewardRound: 10
+  earnedPicture: 0
   t1FishPrefab: {fileID: 5108748845215028306, guid: df1a55bcd3b00b449b9971a509b0cd5f, type: 3}
   t2FishPrefab: {fileID: 3733000846023706619, guid: ae87ae05100cec948bd6d8bfa252375e, type: 3}
   t3FishPrefab: {fileID: 4255617666947438197, guid: 3a9d2a64bc7894047b31a3688cd0a430, type: 3}
