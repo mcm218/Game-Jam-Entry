@@ -20,6 +20,7 @@ namespace Assets.Scripts
         public Sprite goodEndingSprite;
         public Sprite badEndingSprite;
 
+        private bool exitButtonVisible = false;
         private bool gameOver = false;
 
         public void Start()
@@ -35,9 +36,20 @@ namespace Assets.Scripts
         {
             if (Input.GetKeyDown(KeyCode.Escape) && this.gameOver == false)
             {
-                // Toggle visibility of restart/exit buttons
-                this.restartButton.transform.localScale = Vector3.one;
-                this.exitButton.transform.localScale = Vector3.one;
+                this.exitButtonVisible = !this.exitButtonVisible;
+
+                if (this.exitButtonVisible)
+                {
+                    // Toggle visibility of restart/exit buttons
+                    this.restartButton.transform.localScale = Vector3.one;
+                    this.exitButton.transform.localScale = Vector3.one;
+                }
+                else
+                {
+                    // Toggle visibility of restart/exit buttons
+                    this.restartButton.transform.localScale = Vector3.zero;
+                    this.exitButton.transform.localScale = Vector3.zero;
+                }
             }
         }
 
