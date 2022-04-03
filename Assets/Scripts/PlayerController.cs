@@ -109,11 +109,11 @@ public class PlayerController : MonoBehaviour
             Vector3 mousePos = Input.mousePosition;
 
             // Convert the mouse position to a point in the world
-            Vector2 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-         
-           
-            if (Mathf.Abs(this.transform.position - worldPos) <= clickRange)
+            float distance = Vector3.Distance(this.transform.position, worldPos);
+
+            if (Mathf.Abs(distance) <= clickRange)
             {
                 // Cast a ray to detect if the player clicked an object with a collider
                 RaycastHit2D raycastHit = Physics2D.Raycast(worldPos, Vector2.zero);
