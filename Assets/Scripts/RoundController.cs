@@ -62,7 +62,7 @@ namespace Assets.Scripts
             {
                 // Get a random spawn position between the two bounds
                 float randomY = Random.Range(this.bottomBound.position.y, this.topBound.position.y);
-                float randomX = Random.Range(this.topBound.position.x, this.bottomBound.position.x);
+                float randomX = this.topBound.position.x;// Random.Range(this.topBound.position.x, this.bottomBound.position.x);
 
                 float roll = Random.Range(0, 3);
 

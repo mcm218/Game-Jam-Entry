@@ -6,13 +6,10 @@ namespace Assets.Scripts
 {
     public class WaveController : MonoBehaviour
     {
-
-        public static WaveController Instance { get; set; }
-
         /// <summary>
-        /// THe wave's collider
+        /// Gets or sets the main WaveController Instance
         /// </summary>
-        public Collider2D collider;
+        public static WaveController Instance { get; set; }
 
         /// <summary>
         /// Is the wave returning to the ocean or extending over the beach?
@@ -48,23 +45,25 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start()
         {
+            // Set the WaveController Instance
             WaveController.Instance = this;
 
-            // If needed, get the player's collider so we can detect if they touch anything
-            if (this.collider == null) { this.collider = this.GetComponent<CircleCollider2D>(); }
-
             // Set the initial x position
-            this.initialXPos = this.transform.localPosition.x;
+            this.initialXPos = this.transform.position.x;
 
             // Set starting time to PI to shift the starting wave oscillation
-            this.time = Mathf.PI;
+            this.time = Mathf.PI / this.waveSpeed;
 
             Debug.Log("Peak is " + (this.initialXPos - (this.waveDistance*2)));
+            Debug.Log("Trough is" + this.initialXPos);
         }
 
         public void Update()
         {
+            // Every frame, move the waves
             this.MoveWaves(this.time);
+
+            // Update the time
             this.time += Time.deltaTime;
         }
 
@@ -81,15 +80,17 @@ namespace Assets.Scripts
             this.isReceding = (-this.waveDistance * this.waveSpeed * Mathf.Sin(time*this.waveSpeed)) < 0;
 
             // Try to move each wave segment
-            this.waveChildren.ForEach((wave) =>
-            { 
-                wave.MoveWave(xPos, isReceding); 
-            });
+            this.waveChildren.ForEach((wave) => { wave.MoveWave(xPos, isReceding); });
         }
 
+        /// <summary>
+        /// Gets the wave's current x position
+        /// </summary>
         public float getWaveXPos ()
         {
-            return this.waveDistance - (this.waveDistance) * Mathf.Cos(time * this.waveSpeed);
+            // Add 3 to shift items a little bit back
+            // The sprite pivots extend past the visible part of the wave, so this is just a dirty fix
+            return this.initialXPos - this.waveDistance - (this.waveDistance) * Mathf.Cos(this.time * this.waveSpeed) + 3;
         }
     }
 }
