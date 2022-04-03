@@ -5,9 +5,15 @@ namespace Assets.Scripts
 {
     public class RoundController : MonoBehaviour
     {
-        public int currentRound = 1;
+        public static RoundController Instance { get; set; }
+        public int currentRound = 0;
 
         public float timer = 0f;
+
+        [Range(5f, 20f)]
+        public float initialSetupTime = 10f;
+
+        public bool setupComplete = false;
 
         [Range (10f, 30f)]
         public float roundCompleteTime = 20f;
@@ -32,7 +38,7 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start()
         {
-            this.StartNewRound(this.currentRound);
+            RoundController.Instance = this;
         }
 
         // Update is called once per frame
@@ -40,7 +46,14 @@ namespace Assets.Scripts
         {
             this.timer += Time.deltaTime;
 
-            if (this.timer >= this.roundCompleteTime)
+            if (this.setupComplete == false && this.timer >= this.initialSetupTime)
+            {
+                this.currentRound++;
+                this.timer = 0f;
+                this.setupComplete = true;
+                return;
+            }
+            else if (this.timer >= this.roundCompleteTime)
             {
                 this.currentRound++;
                 this.timer = 0f;

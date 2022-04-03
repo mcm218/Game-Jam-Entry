@@ -22,6 +22,13 @@ namespace Assets.Scripts
         public float waveDistance = 1f;
 
         /// <summary>
+        /// How far into the level does the wave travel during the setup phase
+        /// </summary>
+        public float setupWaveDistance = 5f;
+
+        private float currentWaveDistance;
+
+        /// <summary>
         /// How fast does the wave oscillate
         /// </summary>
         [Range (0.1f, 10f)]
@@ -48,6 +55,8 @@ namespace Assets.Scripts
             // Set the WaveController Instance
             WaveController.Instance = this;
 
+            this.currentWaveDistance = this.setupWaveDistance;
+
             // Set the initial x position
             this.initialXPos = this.transform.position.x;
 
@@ -65,6 +74,16 @@ namespace Assets.Scripts
 
             // Update the time
             this.time += Time.deltaTime;
+
+            if (this.waveDistance != this.currentWaveDistance && RoundController.Instance.setupComplete) { this.TryToUpdateDistance (this.waveDistance); }
+        }
+
+        private void TryToUpdateDistance(float newWaveDistance)
+        {
+            // Calculate the X pos of the wave
+            float xPos = this.initialXPos - this.currentWaveDistance - (this.currentWaveDistance) * Mathf.Cos(time * this.waveSpeed);
+            // Is the wave currently within 0.1 units of its initial x position? If so, update the wave distance
+            if (Mathf.Abs (this.initialXPos - xPos) <= 0.1) { this.currentWaveDistance = newWaveDistance; }
         }
 
         /// <summary>
@@ -74,7 +93,7 @@ namespace Assets.Scripts
         public void MoveWaves(float time)
         {
             // Calculate the X pos of the wave
-            float xPos = this.initialXPos - this.waveDistance - (this.waveDistance) * Mathf.Cos(time * this.waveSpeed);
+            float xPos = this.initialXPos - this.currentWaveDistance - (this.currentWaveDistance) * Mathf.Cos(time * this.waveSpeed);
              
             // Use the derivative to determine if the wave is receding or not
             this.isReceding = (-this.waveDistance * this.waveSpeed * Mathf.Sin(time*this.waveSpeed)) < 0;
@@ -90,7 +109,7 @@ namespace Assets.Scripts
         {
             // Add 3 to shift items a little bit back
             // The sprite pivots extend past the visible part of the wave, so this is just a dirty fix
-            return this.initialXPos - this.waveDistance - (this.waveDistance) * Mathf.Cos(this.time * this.waveSpeed) + 3;
+            return this.initialXPos - this.currentWaveDistance - (this.currentWaveDistance) * Mathf.Cos(this.time * this.waveSpeed) + 3;
         }
     }
 }
