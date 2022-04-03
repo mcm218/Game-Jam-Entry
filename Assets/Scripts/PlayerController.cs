@@ -133,6 +133,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        // Restrict movement once the sand castle is destroyed
+        //if (SandCastleController.SandCastleDestroyed) { return; }
+
+
         // Get the current horizontal input
         this.movement.x = Input.GetAxisRaw("Horizontal");
 
