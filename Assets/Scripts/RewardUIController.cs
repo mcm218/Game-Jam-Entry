@@ -14,22 +14,37 @@ namespace Assets.Scripts
         public TextMeshProUGUI failureMessage;
 
         public Button restartButton;
+        public Button exitButton;
         public Button closeButton;
 
         public Sprite goodEndingSprite;
         public Sprite badEndingSprite;
 
+        private bool gameOver = false;
+
         public void Start()
         {
             RewardUIController.Instance = this;
             this.image.color = Color.clear;
-            this.restartButton.transform.localScale  = Vector3.zero;
+            this.restartButton.transform.localScale = Vector3.zero;
             this.failureMessage.transform.localScale = Vector3.zero;
-            this.closeButton.transform.localScale    = Vector3.zero;
+            this.closeButton.transform.localScale = Vector3.zero;
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && this.gameOver == false)
+            {
+                // Toggle visibility of restart/exit buttons
+                this.restartButton.transform.localScale = Vector3.one;
+                this.exitButton.transform.localScale = Vector3.one;
+            }
         }
 
         public void DisplayEnding ()
         {
+            this.gameOver = true;
+
             this.image.sprite = RoundController.Instance.earnedPicture ? this.goodEndingSprite : this.badEndingSprite;
 
             this.image.color = Color.white;
@@ -47,6 +62,7 @@ namespace Assets.Scripts
                 // Otherwise, if the player failed, display the text for the destroyed
                 // sand castle 'live' scene and show the 'restart' option
                 this.restartButton.transform.localScale  = Vector3.one;
+                this.exitButton.transform.localScale = Vector3.one;
                 this.failureMessage.transform.localScale = Vector3.one;
             }
         }
@@ -61,7 +77,13 @@ namespace Assets.Scripts
 
             // Show the restart button and failure message
             this.restartButton.transform.localScale  = Vector3.one;
+            this.exitButton.transform.localScale     = Vector3.one;
             this.failureMessage.transform.localScale = Vector3.one;
+        }
+
+        public void ExitGame ()
+        {
+            Application.Quit();
         }
     }
 }
