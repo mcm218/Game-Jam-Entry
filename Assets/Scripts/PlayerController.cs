@@ -79,7 +79,14 @@ public class PlayerController : MonoBehaviour
 
     public float actionTimer = 0f;
 
-    public float actionCompleteTime = 1f;
+    [Range(0.01f, 2f)]
+    public float diggingTime = 1f;
+
+    [Range(0.01f, 2f)]
+    public float buildingTime = 1f;
+
+    [Range(0.01f, 2f)]
+    public float litterRemovalTime = 1f;
 
     public bool isPerformingAction = false;
 
@@ -188,7 +195,7 @@ public class PlayerController : MonoBehaviour
             // Reset the action progress bar
             this.isPerformingAction = false;
             this.actionTimer = 0f;
-            this.progressBarFill.fillAmount = this.actionTimer / this.actionCompleteTime;
+            this.progressBarFill.fillAmount = this.actionTimer / this.GetCurrentActionTime();
         }
 
         // Is the player performing an action?
@@ -198,7 +205,7 @@ public class PlayerController : MonoBehaviour
             this.actionTimer += Time.deltaTime;
 
             // Has the action completion time been reached?
-            if (this.actionTimer >= this.actionCompleteTime)
+            if (this.actionTimer >= this.GetCurrentActionTime())
             {
                 switch (this.currentAction)
                 {
@@ -233,7 +240,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // Update the progress bar
-            this.progressBarFill.fillAmount = this.actionTimer / this.actionCompleteTime;
+            this.progressBarFill.fillAmount = this.actionTimer / this.GetCurrentActionTime();
         }
     }
 
@@ -247,6 +254,23 @@ public class PlayerController : MonoBehaviour
         // - Speed handles how fast the player is moving
         // - Fixed Delta Time ensures movement is constrained to the time since the last frame
         if (this.isPerformingAction == false) { this.rigidBody.MovePosition(this.rigidBody.position + (this.movement * this.speed * Time.fixedDeltaTime)); }
+    }
+
+    public float GetCurrentActionTime ()
+    {
+        switch (this.currentAction)
+        {
+            case ActionEnum.Building:
+                return this.buildingTime;
+            case ActionEnum.Digging:
+                return this.diggingTime;
+            case ActionEnum.ClearingLitter:
+                return this.litterRemovalTime;
+            case ActionEnum.Repairing:
+            case ActionEnum.Upgrading:
+            default:
+                return 1f;
+        }
     }
 
     public void UpdateSpriteDirection ()
