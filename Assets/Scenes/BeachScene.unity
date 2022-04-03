@@ -11870,7 +11870,7 @@ MonoBehaviour:
   plasticPrefab: {fileID: 5827410839615757602, guid: 34af5af6c98e33e4bb410eb6e3777911, type: 3}
   topBound: {fileID: 603275691}
   bottomBound: {fileID: 2109942110}
-  difficultyModifier: 1.082
+  difficultyModifier: 2.727
   newLitterList: []
   newFishList: []
 --- !u!4 &1866976304
