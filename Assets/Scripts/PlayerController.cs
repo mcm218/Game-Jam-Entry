@@ -232,7 +232,7 @@ public class PlayerController : MonoBehaviour
                     case ActionEnum.Upgrading:
                         break;
                     case ActionEnum.ClearingLitter:
-                        Destroy(this.litterBeingRemoved.gameObject);
+                        this.litterBeingRemoved.RemoveLitter();
                         this.litterBeingRemoved = null;
                         break;
                     default:
