@@ -37,7 +37,7 @@ namespace Assets.Scripts
             {
                 float xPos = WaveController.Instance.getWaveXPos();
 
-                this.rigidBody.MovePosition(this.rigidBody.position + new Vector2(xPos - this.rigidBody.position.x, 0));
+                this.rigidBody.MovePosition(this.rigidBody.position + new Vector2(Mathf.Clamp (xPos - this.rigidBody.position.x, -0.2f, 0.2f), 0));
             }
 
             if (this.isStuck)

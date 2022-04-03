@@ -165,8 +165,8 @@ MonoBehaviour:
   progressBarContainer: {fileID: 1439872184}
   progressBarFill: {fileID: 1787310153}
   actionTimer: 0
-  diggingTime: 0.568
-  buildingTime: 0.01
+  diggingTime: 1.05
+  buildingTime: 0.3
   litterRemovalTime: 1
   removeWallTime: 1
   isPerformingAction: 0
@@ -8924,7 +8924,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603275690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.08, y: 3.74, z: 0}
+  m_LocalPosition: {x: 8.95, y: 3.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1866976304}
@@ -12513,7 +12513,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2109942109}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.98, y: -7.07, z: 0}
+  m_LocalPosition: {x: 8.95, y: -7.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1866976304}
