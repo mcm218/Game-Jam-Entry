@@ -166,7 +166,7 @@ MonoBehaviour:
   progressBarFill: {fileID: 1787310153}
   actionTimer: 0
   diggingTime: 1.05
-  buildingTime: 0.3
+  buildingTime: 0.4
   litterRemovalTime: 1
   removeWallTime: 1
   isPerformingAction: 0
@@ -12008,7 +12008,7 @@ MonoBehaviour:
   plasticPrefab: {fileID: 5827410839615757602, guid: 34af5af6c98e33e4bb410eb6e3777911, type: 3}
   topBound: {fileID: 603275691}
   bottomBound: {fileID: 2109942110}
-  difficultyModifier: 2.727
+  difficultyModifier: 1.082
   newLitterList: []
   newFishList: []
 --- !u!4 &1866976304
